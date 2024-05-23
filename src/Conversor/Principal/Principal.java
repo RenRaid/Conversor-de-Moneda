@@ -35,14 +35,14 @@ public class Principal {
 
         try {
             int seleccion = Integer.parseInt(conversion.nextLine());
-            ArrayList<String> historial = new ArrayList<String>();
+            ArrayList<String> historial = new ArrayList<>();
 
             while (seleccion < 7) {
                 MonedaRate result = consulta.rateConversion(baseRates[seleccion - 1], targetRates[seleccion - 1]);
                 System.out.println("Ingrese el monto a convertir.");
-                Double monto = Double.valueOf(conversion.nextLine());
+                double monto = Double.parseDouble(conversion.nextLine());
 
-                Double total = monto * Double.valueOf(result.conversion_rate());
+                Double total = monto * Double.parseDouble(result.conversion_rate());
 
                 LocalDateTime myDateObj = LocalDateTime.now();
                 DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -56,7 +56,7 @@ public class Principal {
                         + numberFormat.format("%.2f", total) + " [" + result.target_code() + "]");
                 System.out.println();
                 String transaccion = ("Monto:" + monto + "[" + result.base_code() + "] equivalente:"
-                        + numberFormat.format("%.2f", total) + "[" + result.target_code() + "]");
+                        + String.format("%.2f",total) + "[" + result.target_code() + "]");
 
                 historial.add("********************");
                 historial.add(formattedDate);
@@ -72,8 +72,9 @@ public class Principal {
                    if(historial.isEmpty()){
                        System.out.println("No existen registros de conversiones");
                    }else {
-                       for (int i = 0; i < historial.size(); i++) {
-                           System.out.println(historial.get(i));
+                       System.out.println("*** HISTORIAL ***");
+                       for (String s : historial) {
+                           System.out.println(s);
                        }
                    }
 
